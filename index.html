@@ -430,6 +430,43 @@ h1 .shimmer{background:linear-gradient(100deg,var(--cyan),var(--violet),var(--pi
 .post p{color:var(--muted);font-size:.87rem}
 @media(max-width:920px){.blog-grid{grid-template-columns:1fr}}
 
+/* ===== CERTIFICATE GALLERY ===== */
+.cert-grid2{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.cert-card{padding:0}
+.cert-cover{height:190px;position:relative;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line);
+  background:radial-gradient(circle at 30% 20%,rgba(79,140,255,.16),transparent 55%),radial-gradient(circle at 75% 85%,rgba(192,38,211,.16),transparent 55%)}
+.cert-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;
+  transition:transform .55s cubic-bezier(.2,.9,.3,1.4);opacity:1}
+.cert-card:hover .cert-cover img{transform:scale(1.06)}
+.cert-fallback{font-family:var(--fd);font-weight:800;font-size:2.2rem;opacity:.22;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:none;pointer-events:none}
+.cert-cover.no-img img{display:none}
+.cert-cover.no-img .cert-fallback{display:block}
+.cert-badge{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--fm);font-weight:700;font-size:.7rem;
+  padding:5px 11px;border-radius:99px;background:rgba(10,8,28,.72);border:1px solid var(--line-bright);
+  color:var(--text);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.cert-body{padding:22px 24px 26px}
+.cert-body h3{font-size:1.06rem;font-weight:800;margin-bottom:8px;line-height:1.35}
+.cert-body p{color:var(--muted);font-size:.87rem;margin-bottom:16px}
+button.plink.cert-view{background:none;border:none;padding:0;font:inherit;cursor:pointer}
+@media(max-width:920px){.cert-grid2{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.cert-grid2{grid-template-columns:1fr}}
+
+/* certificate lightbox */
+.lightbox{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:5vh 5vw;
+  background:rgba(5,3,18,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  opacity:0;visibility:hidden;transition:opacity .35s ease}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox figure{margin:0;max-width:min(900px,90vw);text-align:center;transform:scale(.94);transition:transform .35s cubic-bezier(.2,.8,.3,1.2)}
+.lightbox.open figure{transform:scale(1)}
+.lightbox img{max-width:100%;max-height:78vh;border-radius:16px;border:1px solid var(--line-bright);
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 50px rgba(139,92,246,.25);background:var(--glass-strong)}
+.lightbox figcaption{margin-top:16px;font-family:var(--fm);font-size:.85rem;color:var(--muted)}
+.lightbox-close{position:absolute;top:20px;right:24px;width:44px;height:44px;border-radius:50%;
+  background:var(--glass-strong);border:1px solid var(--line);color:var(--text);font-size:1.1rem;
+  cursor:pointer;display:grid;place-items:center;transition:all .3s}
+.lightbox-close:hover{border-color:var(--line-bright);transform:scale(1.08);box-shadow:0 6px 20px rgba(139,92,246,.35)}
+
 /* ===== ACH / CERT / EXP / RESUME / BEYOND ===== */
 .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .ach{padding:26px}
@@ -525,6 +562,7 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
   <a class="nav-logo" href="#home">&lt;AR/&gt;</a>
   <a class="link" href="#about">About</a>
   <a class="link" href="#projects">Projects</a>
+  <a class="link" href="#certificates">Certificates</a>
   <a class="link" href="#research">Research</a>
   <a class="link" href="#blog">Blog</a>
   <a class="link" href="#resume">Resume</a>
@@ -870,10 +908,114 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
   </div>
 </section>
 
+<!-- ================= CERTIFICATES ================= -->
+<!-- TO UPLOAD YOUR OWN CERTIFICATES: put each certificate image in a
+     "certificates" folder next to this HTML file (e.g. certificates/cert-1.jpg)
+     and update the <img src="..."> and the "Download" href on each card below
+     to match. Everything else — title, issuer, tags, badge letters/year — is
+     plain text you can edit directly. Add or remove a whole <div class="cert-card">
+     block to add or remove a certificate. -->
+<section id="certificates">
+  <div class="wrap">
+    <div class="eyebrow reveal">05 · Certificates</div>
+    <h2 class="section-title reveal">Proof of the <span class="gtext">work</span></h2>
+    <p class="section-sub reveal">Courses, competitions and trainings — tap a card to view the full certificate.</p>
+    <span class="demo-note reveal">DEMO CARDS — UPLOAD YOUR CERTIFICATE IMAGES AND EDIT THE DETAILS (SEE COMMENT IN THE HTML SOURCE)</span>
+
+    <div class="cert-grid2">
+      <div class="cert-card glass reveal tilt" data-d="1">
+        <div class="glare"></div>
+        <div class="cert-cover">
+          <img src="certificates/cert-1.jpg" alt="AI Prompt Engineering — Agent X Competition certificate" loading="lazy" onerror="this.closest('.cert-cover').classList.add('no-img')">
+          <span class="cert-fallback">AI</span>
+          <span class="cert-badge">2026</span>
+        </div>
+        <div class="cert-body">
+          <div class="proj-tags"><span class="ptag">Microsoft</span><span class="ptag">Netcom Learning</span></div>
+          <h3>AI Prompt Engineering — Agent X Competition</h3>
+          <p>Issued by Microsoft &amp; Netcom Learning.</p>
+          <div class="plink-row">
+            <button type="button" class="plink cert-view" data-title="AI Prompt Engineering — Agent X Competition">View Certificate ⤢</button>
+            <a class="plink" href="certificates/cert-1.jpg" download>Download ⤓</a>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card glass reveal tilt" data-d="2">
+        <div class="glare"></div>
+        <div class="cert-cover">
+          <img src="certificates/cert-2.jpg" alt="Data Analysis with Excel certificate" loading="lazy" onerror="this.closest('.cert-cover').classList.add('no-img')">
+          <span class="cert-fallback">DA</span>
+          <span class="cert-badge">2026</span>
+        </div>
+        <div class="cert-body">
+          <div class="proj-tags"><span class="ptag">FutureNation</span><span class="ptag">Excel</span></div>
+          <h3>Data Analysis with Excel</h3>
+          <p>Issued by FutureNation.</p>
+          <div class="plink-row">
+            <button type="button" class="plink cert-view" data-title="Data Analysis with Excel">View Certificate ⤢</button>
+            <a class="plink" href="certificates/cert-2.jpg" download>Download ⤓</a>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card glass reveal tilt" data-d="3">
+        <div class="glare"></div>
+        <div class="cert-cover">
+          <img src="certificates/cert-3.jpg" alt="Data Entry, Scraping and Lead Generation certificate" loading="lazy" onerror="this.closest('.cert-cover').classList.add('no-img')">
+          <span class="cert-fallback">DS</span>
+          <span class="cert-badge">2026</span>
+        </div>
+        <div class="cert-body">
+          <div class="proj-tags"><span class="ptag">FutureNation</span><span class="ptag">Data Entry</span></div>
+          <h3>Data Entry, Scraping &amp; Lead Generation</h3>
+          <p>Issued by FutureNation.</p>
+          <div class="plink-row">
+            <button type="button" class="plink cert-view" data-title="Data Entry, Scraping &amp; Lead Generation">View Certificate ⤢</button>
+            <a class="plink" href="certificates/cert-3.jpg" download>Download ⤓</a>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card glass reveal tilt" data-d="1">
+        <div class="glare"></div>
+        <div class="cert-cover">
+          <img src="certificates/cert-4.jpg" alt="Professional Soft Skills certificate" loading="lazy" onerror="this.closest('.cert-cover').classList.add('no-img')">
+          <span class="cert-fallback">SS</span>
+          <span class="cert-badge">2026</span>
+        </div>
+        <div class="cert-body">
+          <div class="proj-tags"><span class="ptag">GoEdu</span><span class="ptag">Soft Skills</span></div>
+          <h3>Professional Soft Skills</h3>
+          <p>Issued by GoEdu.</p>
+          <div class="plink-row">
+            <button type="button" class="plink cert-view" data-title="Professional Soft Skills">View Certificate ⤢</button>
+            <a class="plink" href="certificates/cert-4.jpg" download>Download ⤓</a>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card glass reveal tilt" data-d="2">
+        <div class="glare"></div>
+        <div class="cert-cover">
+          <img src="certificates/cert-5.jpg" alt="English Communication certificate" loading="lazy" onerror="this.closest('.cert-cover').classList.add('no-img')">
+          <span class="cert-fallback">EN</span>
+          <span class="cert-badge">2026</span>
+        </div>
+        <div class="cert-body">
+          <div class="proj-tags"><span class="ptag">Speaking Council</span><span class="ptag">Chattogram</span></div>
+          <h3>English Communication</h3>
+          <p>Issued by Speaking Council, Chattogram.</p>
+          <div class="plink-row">
+            <button type="button" class="plink cert-view" data-title="English Communication">View Certificate ⤢</button>
+            <a class="plink" href="certificates/cert-5.jpg" download>Download ⤓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= RESEARCH ================= -->
 <section id="research">
   <div class="wrap">
-    <div class="eyebrow reveal">05 · Research</div>
+    <div class="eyebrow reveal">06 · Research</div>
     <h2 class="section-title reveal">Questions worth <span class="gtext">chasing</span></h2>
     <p class="section-sub reveal">Interests, ongoing work, and a home for future publications.</p>
 
@@ -921,7 +1063,7 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
 <!-- ================= BLOG ================= -->
 <section id="blog">
   <div class="wrap">
-    <div class="eyebrow reveal">06 · Blog</div>
+    <div class="eyebrow reveal">07 · Blog</div>
     <h2 class="section-title reveal">A public <span class="gtext">learning journal</span></h2>
     <p class="section-sub reveal">Notes, tutorials and stories from the journey. Every post below is a placeholder — replace them with your real writing.</p>
     <div class="chips reveal" style="margin-bottom:36px">
@@ -943,7 +1085,7 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
 <!-- ================= RESUME ================= -->
 <section id="resume">
   <div class="wrap">
-    <div class="eyebrow reveal">07 · Resume</div>
+    <div class="eyebrow reveal">08 · Resume</div>
     <h2 class="section-title reveal">The <span class="gtext">professional profile</span></h2>
     <p class="section-sub reveal">Resume, certifications, achievements and experience in one place.</p>
     <div class="resume-grid" style="margin-bottom:64px">
@@ -1009,7 +1151,7 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
 <!-- ================= BEYOND ================= -->
 <section id="beyond">
   <div class="wrap">
-    <div class="eyebrow reveal">08 · Beyond Work</div>
+    <div class="eyebrow reveal">09 · Beyond Work</div>
     <h2 class="section-title reveal">Outside the <span class="gtext">notebook</span></h2>
     <p class="section-sub reveal">Keep this short and honest — edit these to match you.</p>
     <div class="beyond-grid">
@@ -1024,7 +1166,7 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
 <!-- ================= CONTACT ================= -->
 <section id="contact">
   <div class="wrap">
-    <div class="eyebrow reveal">09 · Contact</div>
+    <div class="eyebrow reveal">10 · Contact</div>
     <h2 class="section-title reveal">Let's build something <span class="gtext">together</span></h2>
     <p class="section-sub reveal">I'm always open to discussing research, internships, collaborations, or interesting data science projects.</p>
     <div class="contact-grid">
@@ -1049,12 +1191,21 @@ footer{border-top:1px solid var(--line);padding:42px 0;margin-top:40px;backgroun
   <div class="wrap foot">
     <div class="brand gtext">&lt;AR/&gt; Md. Abdur Rahim</div>
     <div class="foot-links">
-      <a href="#home">Home</a><a href="#projects">Projects</a><a href="#research">Research</a>
+      <a href="#home">Home</a><a href="#projects">Projects</a><a href="#certificates">Certificates</a><a href="#research">Research</a>
       <a href="#blog">Blog</a><a href="#resume">Resume</a><a href="#contact">Contact</a>
     </div>
     <div class="credit">© 2026 · Built with ☕ &amp; curiosity · Last updated Jul 2026</div>
   </div>
 </footer>
+
+<!-- certificate lightbox -->
+<div class="lightbox" id="certLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lightbox-close" type="button" aria-label="Close certificate view">✕</button>
+  <figure>
+    <img id="certLightboxImg" src="" alt="">
+    <figcaption id="certLightboxCaption"></figcaption>
+  </figure>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -1431,6 +1582,47 @@ function initCarousel(root){
   start();
 }
 document.querySelectorAll('[data-carousel]').forEach(initCarousel);
+
+/* ---------- certificate lightbox ---------- */
+(function(){
+  const lb=document.getElementById('certLightbox');
+  if(!lb)return;
+  const img=document.getElementById('certLightboxImg');
+  const cap=document.getElementById('certLightboxCaption');
+  const closeBtn=lb.querySelector('.lightbox-close');
+  let lastFocus=null;
+
+  function openLightbox(src,title){
+    img.src=src;
+    img.alt=title?title+' — full certificate':'Certificate';
+    cap.textContent=title||'';
+    lastFocus=document.activeElement;
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    closeBtn.focus();
+  }
+  function closeLightbox(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    img.src='';
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+
+  document.querySelectorAll('.cert-view').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const card=btn.closest('.cert-card');
+      const image=card?card.querySelector('.cert-cover img'):null;
+      openLightbox(image?image.src:'',btn.dataset.title);
+    });
+  });
+  closeBtn.addEventListener('click',closeLightbox);
+  lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&lb.classList.contains('open'))closeLightbox();
+  });
+})();
 </script>
 </body>
 </html>
